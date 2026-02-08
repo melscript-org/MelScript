@@ -2,10 +2,10 @@
   "name": "melscript-support",
   "displayName": "MelScript Support",
   "description": "Official MelScript syntax highlighting for HTML files.",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "publisher": "ON00dev",
-  "icon": "image.png",
   "license": "MIT",
+  "icon": "media/image.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/melscript-org/MelScript"
@@ -25,33 +25,23 @@
   ],
   "main": "./extension.js",
   "activationEvents": [
-    "onLanguage:melscript",
-    "onCommand:melscript.run"
+    "onLanguage:melscript"
   ],
   "contributes": {
-    "commands": [
+    "iconThemes": [
       {
-        "command": "melscript.run",
-        "title": "Run MelScript",
-        "category": "MelScript",
-        "icon": "$(play)"
+        "id": "mel-icon-theme",
+        "label": "MelScript Icons",
+        "path": "./themes/mel-icon-theme.json"
       }
     ],
-    "menus": {
-      "editor/title/run": [
-        {
-          "command": "melscript.run",
-          "when": "resourceLangId == melscript",
-          "group": "navigation"
-        }
-      ]
-    },
     "languages": [
       {
         "id": "melscript",
         "aliases": ["MelScript", "mel"],
         "extensions": [".mel"],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": "./icon_files.ico"
       }
     ],
     "grammars": [
