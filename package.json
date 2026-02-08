@@ -1,0 +1,23 @@
+{
+  "name": "melscript",
+  "version": "1.0.0",
+  "description": "MelScript Language Interpreter",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "npx serve .",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write \"src/**/*.js\""
+  },
+  "keywords": [
+    "interpreter",
+    "language",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "serve": "^14.2.1"
+  }
+}

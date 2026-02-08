@@ -1,1 +1,1 @@
-setupKeywords(Lang)
+setupKeywords(Lang);
