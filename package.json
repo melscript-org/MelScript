@@ -28,7 +28,7 @@
     "javascript"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "eslint": "^8.57.0",
     "pkg": "^5.8.1",
