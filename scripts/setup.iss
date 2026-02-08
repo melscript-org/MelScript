@@ -2,7 +2,7 @@
 ; MelScript Installer
 
 #define MyAppName "MelScript"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "1.0.1"
 #define MyAppPublisher "MelScript Org"
 #define MyAppURL "https://github.com/melscript-org/MelScript"
 #define MyAppExeName "mel.exe"

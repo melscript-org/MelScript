@@ -1,6 +1,6 @@
 {
   "name": "melscript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MelScript Language Interpreter",
   "main": "dist/melscript.js",
   "bin": {
@@ -31,6 +31,7 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.57.0",
+    "innosetup": "^6.4.1",
     "pkg": "^5.8.1",
     "prettier": "^3.2.5",
     "serve": "^14.2.1"
