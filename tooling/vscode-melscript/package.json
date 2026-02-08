@@ -3,7 +3,7 @@
   "displayName": "MelScript Support",
   "description": "Official MelScript syntax highlighting for HTML files.",
   "version": "1.0.0",
-  "publisher": "melscript-org",
+  "publisher": "ON00dev",
   "icon": "image.png",
   "license": "MIT",
   "repository": {
