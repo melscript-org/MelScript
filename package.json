@@ -16,6 +16,7 @@
     "start": "npx serve .",
     "build": "node scripts/build.js && node scripts/build-node.js",
     "build:node": "node scripts/build-node.js",
+    "build:exe": "pkg bin/mel-pkg.js --targets node18-win-x64 --output dist/mel.exe",
     "prepublishOnly": "npm run build",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write \"src/**/*.js\""
@@ -29,6 +30,7 @@
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.57.0",
+    "pkg": "^5.8.1",
     "prettier": "^3.2.5",
     "serve": "^14.2.1"
   }
