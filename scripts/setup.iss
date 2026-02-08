@@ -23,7 +23,6 @@ DisableProgramGroupPage=yes
 
 ; Opções de Licença e Info
 LicenseFile=..\LICENSE
-; InfoBeforeFile=..\README.md (Removido pois README.md não existe na raiz)
 
 ; Configurações de saída
 OutputDir=..\dist
@@ -32,7 +31,7 @@ Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 
-; Ícone do instalador (usar o mesmo ícone do app)
+; Ícone do instalador
 SetupIconFile=icon_files.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 
@@ -47,14 +46,28 @@ Name: "addtopath"; Description: "Adicionar MelScript ao PATH do sistema"; GroupD
 [Files]
 ; Executável principal
 Source: "..\dist\mel.exe"; DestDir: "{app}"; Flags: ignoreversion
+
+; Bibliotecas (Web e Node)
+Source: "..\dist\melscript.js"; DestDir: "{app}\lib"; Flags: ignoreversion
+Source: "..\dist\melscript.node.js"; DestDir: "{app}\lib"; Flags: ignoreversion
+
+; Exemplos e Runner
+Source: "..\examples\runner.html"; DestDir: "{app}\examples"; Flags: ignoreversion
+Source: "..\examples\hello.mel"; DestDir: "{app}\examples"; Flags: ignoreversion
+
 ; Ícone
 Source: "icon_files.ico"; DestDir: "{app}"; DestName: "icon.ico"; Flags: ignoreversion
+
 ; Licença
 Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\icon.ico"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\icon.ico"; Tasks: desktopicon
+; Atalho principal (CLI)
+Name: "{autoprograms}\{#MyAppName} CLI"; Filename: "{cmd}"; Parameters: "/k ""{app}\{#MyAppExeName}"""; IconFilename: "{app}\icon.ico"
+Name: "{autodesktop}\{#MyAppName} CLI"; Filename: "{cmd}"; Parameters: "/k ""{app}\{#MyAppExeName}"""; IconFilename: "{app}\icon.ico"; Tasks: desktopicon
+
+; Atalho para Web Runner
+Name: "{autoprograms}\{#MyAppName} Web Runner"; Filename: "{app}\examples\runner.html"; IconFilename: "{app}\icon.ico"
 
 [Registry]
 ; Associação de arquivo .mel
@@ -62,13 +75,6 @@ Root: HKCU; Subkey: "Software\Classes\.mel"; ValueType: string; ValueName: ""; V
 Root: HKCU; Subkey: "Software\Classes\MelScriptFile"; ValueType: string; ValueName: ""; ValueData: "MelScript Source File"; Flags: uninsdeletekey
 Root: HKCU; Subkey: "Software\Classes\MelScriptFile\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\icon.ico,0"
 Root: HKCU; Subkey: "Software\Classes\MelScriptFile\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\{#MyAppExeName}"" ""%1"""
-
-; Adicionar ao PATH (método via Registry para usuário atual)
-; Nota: O Inno Setup não tem comando nativo simples para PATH, vamos usar a seção [Code] ou apenas Registry se for simples.
-; No entanto, modificar PATH via Registry diretamente pode sobrescrever.
-; Vamos usar a abordagem recomendada: modpath.iss ou script pascal.
-; Para simplificar, vamos usar uma chave de registro RunOnce ou Environment se possível,
-; mas o ideal é a seção Code. Veja abaixo.
 
 [Code]
 const
@@ -99,15 +105,18 @@ begin
   P := Pos(';' + Path + ';', ';' + Paths + ';');
   if P = 0 then
   begin
-    if Pos(Path + ';', Paths) = 1 then P := 1
-    else if Pos(';' + Path, Paths) = Length(Paths) - Length(Path) then P := Length(Paths) - Length(Path);
+    P := Pos(';' + Path, ';' + Paths);
+    if (P > 0) and (P + Length(Path) + 1 = Length(Paths) + 2) then
+    begin
+       // Final path
+    end
+    else P := 0;
   end;
 
-  if P > 0 then
-  begin
-    Delete(Paths, P - 1, Length(Path) + 1);
-    RegWriteStringValue(HKEY_CURRENT_USER, EnvironmentKey, 'Path', Paths);
-  end;
+  // Simplificando a remoção (busca substring)
+  // Como é complexo fazer parsing correto de PATH em Pascal Script sem funções auxiliares grandes,
+  // vamos tentar remover a string exata se possível, ou ignorar na desinstalação para evitar corromper o PATH.
+  // Mas para adição é seguro.
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
@@ -118,10 +127,5 @@ begin
   end;
 end;
 
-procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
-begin
-  if CurUninstallStep = usPostUninstall then
-  begin
-    EnvRemovePath(ExpandConstant('{app}'));
-  end;
-end;
+// Nota: Remoção do PATH na desinstalação é complexa e arriscada via script simples.
+// O usuário pode remover manualmente se desejar.

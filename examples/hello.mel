@@ -1,0 +1,5 @@
+print("Olá do MelScript!")
+print("Este é um arquivo de exemplo.")
+for (i = 1; i <= 5; i = i + 1) {
+    print("Contagem: " + i)
+}

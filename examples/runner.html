@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MelScript Web Runner</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #1e1e1e; color: #d4d4d4; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #dcdcaa; }
+        textarea { width: 100%; height: 200px; background: #2d2d2d; color: #d4d4d4; border: 1px solid #3c3c3c; padding: 10px; font-family: 'Consolas', monospace; font-size: 14px; }
+        button { background: #0e639c; color: white; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        button:hover { background: #1177bb; }
+        #mel-output { margin-top: 20px; padding: 10px; background: #000; border: 1px solid #333; min-height: 100px; white-space: pre-wrap; font-family: 'Consolas', monospace; }
+    </style>
+    <!-- Carrega a biblioteca MelScript localmente -->
+    <script src="../lib/melscript.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>MelScript Web Runner</h1>
+        <p>Edite o código abaixo e clique em Executar.</p>
+        <textarea id="code">
+print("Olá, Mundo Web!")
+x = 10
+y = 20
+print("Soma: " + (x + y))
+        </textarea>
+        <button onclick="runCode()">Executar</button>
+        <div id="mel-output"></div>
+    </div>
+
+    <script>
+        function runCode() {
+            const code = document.getElementById('code').value;
+            const outputDiv = document.getElementById('mel-output');
+            outputDiv.innerHTML = ''; // Limpa anterior
+
+            try {
+                if (window.MEL && window.MEL.execute) {
+                    // Configura modo web para redirecionar print() para #mel-output
+                    if (window.MEL.interpreter && window.MEL.interpreter.state) {
+                        window.MEL.interpreter.state.variables.set('MEL_SCRIPT', { CONFIG: 'web' });
+                    }
+                    
+                    window.MEL.execute(code);
+                } else {
+                    outputDiv.innerHTML = "Erro: Biblioteca MelScript não carregada corretamente.";
+                }
+            } catch (e) {
+                outputDiv.innerHTML += "\nErro de Execução: " + e.message;
+                console.error(e);
+            }
+        }
+    </script>
+</body>
+</html>
