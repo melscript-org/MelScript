@@ -29,6 +29,7 @@
 
     'src/stdlib/index.js',
     'src/stdlib/init.js',
+    'src/loader/highlighter.js',
     'src/loader/script-loader.js',
   ];
 

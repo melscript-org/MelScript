@@ -167,7 +167,19 @@
     const scriptsArray = Array.from(melScripts);
 
     for (let i = 0; i < scriptsArray.length; i++) {
-      const code = scriptsArray[i].textContent;
+      const scriptEl = scriptsArray[i];
+      // Normaliza o código removendo indentação comum da primeira linha se necessário
+      // mas vamos manter simples por enquanto
+      const code = scriptEl.textContent;
+
+      // Highlight visual
+      if (scriptEl.hasAttribute('view')) {
+         if (typeof window.highlightMelScript === 'function') {
+             // Remove primeira quebra de linha se existir para ficar bonito
+             let displayCode = code.replace(/^\n/, ''); 
+             scriptEl.innerHTML = window.highlightMelScript(displayCode);
+         }
+      }
 
       const isWebMode = /MEL_SCRIPT\s*[.=]/i.test(code) && /["']web["']/i.test(code);
 
@@ -187,7 +199,10 @@
         }
       }
 
-      scriptsArray[i].remove();
+      // Só remove se NÃO for para visualizar
+      if (!scriptEl.hasAttribute('view')) {
+        scriptEl.remove();
+      }
     }
   }
 
