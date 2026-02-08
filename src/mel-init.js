@@ -3,7 +3,7 @@
     const melSetup = document.querySelector('mel-setup');
 
     if (!melSetup) {
-      console.error('mel-setup tag not found');
+      
       return;
     }
 
