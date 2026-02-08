@@ -15,10 +15,10 @@
         "2": { "name": "entity.name.tag.html" },
         "3": { "name": "punctuation.definition.tag.end.html" }
       },
-      "contentName": "source.js",
+      "contentName": "source.mel",
       "patterns": [
         {
-          "include": "source.js"
+          "include": "source.mel"
         }
       ]
     }

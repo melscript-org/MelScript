@@ -4,14 +4,20 @@ Official syntax highlighting support for [MelScript](https://github.com/melscrip
 
 ## Features
 
-- **Syntax Highlighting**: Automatically colors code inside `<mel>` tags in HTML files.
-- **Embedded Language**: Treats content within `<mel>...</mel>` as MelScript (syntax similar to JavaScript).
+- **Syntax Highlighting**: Automatically colors code inside `<mel>` tags in HTML files and `.mel` files.
+- **Run MelScript**: Execute `.mel` files directly in VS Code with a live preview (Click the "Play" button in the editor title or run command `MelScript: Run MelScript`).
+- **Embedded Language**: Treats content within `<mel>...</mel>` as MelScript.
 
 ## Usage
 
-1. Open any `.html` file.
-2. Write your MelScript code inside `<mel>` tags.
-3. Enjoy syntax highlighting!
+### Syntax Highlighting
+1. Open any `.html` file and use `<mel>` tags.
+2. Or open any `.mel` file.
+
+### Running Code
+1. Open a `.mel` file.
+2. Click the **Run** icon (Play button) in the editor toolbar.
+3. A preview window will open showing the output of your script.
 
 ```html
 <mel>
