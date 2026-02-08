@@ -1,0 +1,22 @@
+{
+  "name": "melscript-support",
+  "displayName": "MelScript Support",
+  "description": "Syntax highlighting for MelScript in HTML",
+  "version": "0.0.1",
+  "publisher": "melscript",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "grammars": [
+      {
+        "scopeName": "melscript.injection",
+        "path": "./syntaxes/mel-injection.json",
+        "injectTo": ["text.html.basic"]
+      }
+    ]
+  }
+}
