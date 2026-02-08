@@ -4,6 +4,7 @@
   "description": "Official MelScript syntax highlighting for HTML files.",
   "version": "1.0.0",
   "publisher": "melscript-org",
+  "icon": "image.png",
   "license": "MIT",
   "repository": {
     "type": "git",
