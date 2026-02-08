@@ -99,9 +99,12 @@ function setupIO(Lang) {
                 container.style.cssText = `
                 background: white;
                 padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                min-width: 300px;
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+                width: 90%;
+                max-width: 400px;
+                display: flex;
+                flex-direction: column;
               `;
 
                 let label = null;
@@ -109,9 +112,11 @@ function setupIO(Lang) {
                   label = document.createElement('div');
                   label.textContent = this.__mel_prompt;
                   label.style.cssText = `
-                  margin-bottom: 10px;
+                  margin-bottom: 12px;
                   color: #333;
-                  font-family: monospace;
+                  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                  font-size: 16px;
+                  line-height: 1.4;
                 `;
                   container.appendChild(label);
                 }
@@ -120,28 +125,32 @@ function setupIO(Lang) {
                 input.id = this.__mel_id;
                 input.style.cssText = `
                 width: 100%;
-                padding: 8px;
+                padding: 12px;
                 border: 1px solid #ccc;
-                border-radius: 4px;
+                border-radius: 8px;
                 font-family: monospace;
+                font-size: 16px; /* Previne zoom no iOS */
                 box-sizing: border-box;
+                margin-bottom: 15px;
+                -webkit-appearance: none;
               `;
 
                 button.style.cssText = `
-                margin-top: 10px;
-                padding: 8px 16px;
+                padding: 12px 20px;
                 background: #007bff;
                 color: white;
                 border: none;
-                border-radius: 4px;
+                border-radius: 8px;
                 cursor: pointer;
-                font-family: monospace;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                font-size: 16px;
+                font-weight: 500;
+                min-height: 44px; /* Área de toque mínima */
+                width: 100%;
                 user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-
-  -webkit-tap-highlight-color: transparent;
+                -webkit-user-select: none;
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
               `;
                 button.textContent = 'OK';
 
