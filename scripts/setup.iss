@@ -17,6 +17,11 @@ AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 
+; Permite ao usuário escolher entre "Todos os usuários" (Admin) e "Apenas eu" (User)
+PrivilegesRequiredOverridesAllowed=dialog
+; Notifica o sistema sobre mudanças no PATH
+ChangesEnvironment=yes
+
 ; Diretório padrão (Local AppData é melhor para instalação por usuário sem admin)
 DefaultDirName={autopf}\MelScript
 DisableProgramGroupPage=yes
@@ -37,6 +42,7 @@ UninstallDisplayIcon={app}\{#MyAppExeName}
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
+Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
 
 [Tasks]
@@ -78,45 +84,38 @@ Root: HKCU; Subkey: "Software\Classes\MelScriptFile\shell\open\command"; ValueTy
 
 [Code]
 const
-  EnvironmentKey = 'Environment';
+  EnvironmentKey = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment';
 
 procedure EnvAddPath(Path: string);
 var
   Paths: string;
+  RootKey: Integer;
+  SubKey: string;
 begin
-  if not RegQueryStringValue(HKEY_CURRENT_USER, EnvironmentKey, 'Path', Paths) then
+  // Decide se usa HKLM (System) ou HKCU (User) baseado no modo de instalação
+  if IsAdminInstallMode then
+  begin
+    RootKey := HKEY_LOCAL_MACHINE;
+    SubKey := EnvironmentKey;
+  end
+  else
+  begin
+    RootKey := HKEY_CURRENT_USER;
+    SubKey := 'Environment';
+  end;
+
+  if not RegQueryStringValue(RootKey, SubKey, 'Path', Paths) then
     Paths := '';
 
   if Pos(';' + Path + ';', ';' + Paths + ';') = 0 then
   begin
-    Paths := Paths + ';' + Path;
-    RegWriteStringValue(HKEY_CURRENT_USER, EnvironmentKey, 'Path', Paths);
+    if Paths = '' then
+      Paths := Path
+    else
+      Paths := Paths + ';' + Path;
+      
+    RegWriteStringValue(RootKey, SubKey, 'Path', Paths);
   end;
-end;
-
-procedure EnvRemovePath(Path: string);
-var
-  Paths: string;
-  P: Integer;
-begin
-  if not RegQueryStringValue(HKEY_CURRENT_USER, EnvironmentKey, 'Path', Paths) then
-    Exit;
-
-  P := Pos(';' + Path + ';', ';' + Paths + ';');
-  if P = 0 then
-  begin
-    P := Pos(';' + Path, ';' + Paths);
-    if (P > 0) and (P + Length(Path) + 1 = Length(Paths) + 2) then
-    begin
-       // Final path
-    end
-    else P := 0;
-  end;
-
-  // Simplificando a remoção (busca substring)
-  // Como é complexo fazer parsing correto de PATH em Pascal Script sem funções auxiliares grandes,
-  // vamos tentar remover a string exata se possível, ou ignorar na desinstalação para evitar corromper o PATH.
-  // Mas para adição é seguro.
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
