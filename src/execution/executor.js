@@ -180,10 +180,106 @@ function executeStatement(stmt, scope) {
     if (handler && handler.type === 'executor') {
       return handler.execute(stmt, scope, evaluate, executeStatement);
     }
+
     if (stmt.type === 'ClassDeclaration') {
+      const className = stmt.name;
+      const superClass = stmt.superClass;
+      const constructor = stmt.constructor;
+      const properties = stmt.properties;
+      const methods = stmt.methods;
+
+      const classConstructor = function (...args) {
+        const instance = {};
+
+        if (superClass) {
+          const superValue = scope.get(superClass);
+          if (!superValue || typeof superValue !== 'function') {
+            error('Super class "' + superClass + '" is not defined');
+          }
+          const superInstance = superValue(...args);
+          Object.assign(instance, superInstance);
+        }
+
+        for (const prop of properties) {
+          const value = evaluate(prop.value, scope);
+          instance[prop.name] = value;
+        }
+
+        for (const method of methods) {
+          instance[method.name] = function (...methodArgs) {
+            const methodScope = new Map(scope);
+
+            for (let i = 0; i < method.params.length; i++) {
+              methodScope.set(method.params[i], methodArgs[i]);
+            }
+
+            for (const key in instance) {
+              if (typeof instance[key] !== 'function') {
+                methodScope.set(key, instance[key]);
+              }
+            }
+
+            let returnValue = undefined;
+            try {
+              for (const s of method.body) {
+                executeStatement(s, methodScope);
+              }
+            } catch (e) {
+              if (e && e.type === 'RETURN') {
+                returnValue = e.value;
+              } else {
+                throw e;
+              }
+            }
+
+            for (const key in instance) {
+              if (typeof instance[key] !== 'function' && methodScope.has(key)) {
+                instance[key] = methodScope.get(key);
+              }
+            }
+
+            return returnValue;
+          };
+        }
+
+        if (constructor) {
+          const constructorScope = new Map(scope);
+
+          for (const key in instance) {
+            if (typeof instance[key] !== 'function') {
+              constructorScope.set(key, instance[key]);
+            }
+          }
+
+          for (let i = 0; i < constructor.params.length; i++) {
+            constructorScope.set(constructor.params[i], args[i]);
+          }
+
+          try {
+            for (const s of constructor.body) {
+              executeStatement(s, constructorScope);
+            }
+          } catch (e) {
+            if (e && e.type === 'RETURN') {
+            } else {
+              throw e;
+            }
+          }
+
+          for (const [key, value] of constructorScope) {
+            if (typeof value !== 'function') {
+              instance[key] = value;
+            }
+          }
+        }
+
+        return instance;
+      };
+
+      scope.set(className, classConstructor);
       return;
     }
-
+    
     error('Unknown statement type: ' + stmt.type);
   } finally {
     if (stmt.__mel_source) {
