@@ -303,6 +303,9 @@ function evaluate(node, scope) {
           if (leftType === 'string' || rightType === 'string') {
             return String(left) + String(right);
           }
+            if (leftType === 'bigint' && rightType === 'bigint') {
+            return left + right;  
+          }        
           if (leftType === 'number' && rightType === 'number') {
             return left + right;
           }
