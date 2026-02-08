@@ -3,7 +3,6 @@
     const melSetup = document.querySelector('mel-setup');
 
     if (!melSetup) {
-      
       return;
     }
 
