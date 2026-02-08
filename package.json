@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "MelScript Language Interpreter",
   "main": "dist/melscript.js",
+  "bin": {
+    "mel": "./bin/mel.js"
+  },
   "unpkg": "dist/melscript.js",
   "jsdelivr": "dist/melscript.js",
   "files": [
@@ -11,7 +14,8 @@
   ],
   "scripts": {
     "start": "npx serve .",
-    "build": "node scripts/build.js",
+    "build": "node scripts/build.js && node scripts/build-node.js",
+    "build:node": "node scripts/build-node.js",
     "prepublishOnly": "npm run build",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write \"src/**/*.js\""
