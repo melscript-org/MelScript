@@ -218,48 +218,8 @@ function setupData(Lang) {
         }
         return String(value);
       },
-
-      split: function (str, separator) {
-        return String(str).split(separator);
-      },
-
-      join: function (arr, separator) {
-        if (!Array.isArray(arr)) {
-          Lang.error('join() requires an array');
-        }
-        return arr.join(separator || '');
-      },
-
-      toUpperCase: function (str) {
-        return String(str).toUpperCase();
-      },
-
-      toLowerCase: function (str) {
-        return String(str).toLowerCase();
-      },
-
-      trim: function (str) {
-        return String(str).trim();
-      },
-
-      replace: function (str, search, replace) {
-        return String(str).replace(search, replace);
-      },
-
-      includes: function (str, search) {
-        return String(str).includes(search);
-      },
-
-      startsWith: function (str, search) {
-        return String(str).startsWith(search);
-      },
-
-      endsWith: function (str, search) {
-        return String(str).endsWith(search);
-      },
     },
-  });
-
+  });  
   Lang.addKeyword('string');
 
   function getDimension(target, dimension) {
