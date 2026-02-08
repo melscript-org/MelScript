@@ -63,6 +63,12 @@ function getWebviewContent(code, scriptUri) {
     <!-- Container para a aplicação -->
     <div id="app"></div>
     
+    <!-- Configuração do Ambiente Web -->
+    <mel hidden>
+        // Força o modo Web para que o print() exiba no HTML em vez do console
+        MEL_SCRIPT = { CONFIG: "web" };
+    </mel>
+    
     <!-- Código MelScript Injetado -->
     <!-- Usamos o atributo 'hidden' para não mostrar o código fonte, apenas executar -->
     <mel hidden>
@@ -71,6 +77,22 @@ ${code}
 
     <!-- Runtime -->
     <script src="${scriptUri}"></script>
+    
+    <script>
+        // Intercepta erros globais não capturados
+        window.onerror = function(message, source, lineno, colno, error) {
+            const outputDiv = document.getElementById('mel-output') || document.createElement('div');
+            if (!outputDiv.id) {
+                outputDiv.id = 'mel-output';
+                document.body.appendChild(outputDiv);
+            }
+            const errDiv = document.createElement('div');
+            errDiv.style.color = 'red';
+            errDiv.style.marginTop = '10px';
+            errDiv.textContent = 'Erro de Sistema: ' + message;
+            outputDiv.appendChild(errDiv);
+        };
+    </script>
 </body>
 </html>`;
 }

@@ -2,7 +2,7 @@
   "name": "melscript-support",
   "displayName": "MelScript Support",
   "description": "Official MelScript syntax highlighting for HTML files.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "publisher": "ON00dev",
   "icon": "image.png",
   "license": "MIT",
