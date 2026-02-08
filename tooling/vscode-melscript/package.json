@@ -1,9 +1,21 @@
 {
   "name": "melscript-support",
   "displayName": "MelScript Support",
-  "description": "Syntax highlighting for MelScript in HTML",
-  "version": "0.0.1",
-  "publisher": "melscript",
+  "description": "Official MelScript syntax highlighting for HTML files.",
+  "version": "1.0.0",
+  "publisher": "melscript-org",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/melscript-org/MelScript"
+  },
+  "keywords": [
+    "melscript",
+    "mel",
+    "html",
+    "syntax",
+    "highlighting"
+  ],
   "engines": {
     "vscode": "^1.70.0"
   },
