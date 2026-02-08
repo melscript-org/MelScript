@@ -30,6 +30,7 @@
     'src/stdlib/index.js',
     'src/stdlib/init.js',
     'src/loader/highlighter.js',
+    'src/loader/style-injector.js',
     'src/loader/script-loader.js',
   ];
 

@@ -9283,6 +9283,54 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 
+/* FILE: src/loader/style-injector.js */
+
+// Injetor de estilos MelScript
+(function() {
+    const css = `
+mel {
+    display: block;
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 16px;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 16px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
+}
+
+mel[hidden] {
+    display: none !important;
+}
+
+.mel-keyword { color: #569cd6; font-weight: bold; }
+.mel-string { color: #ce9178; }
+.mel-number { color: #b5cea8; }
+.mel-comment { color: #6a9955; font-style: italic; }
+.mel-function { color: #dcdcaa; }
+.mel-operator { color: #d4d4d4; }
+.mel-boolean { color: #569cd6; }
+`;
+
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.id = 'melscript-styles';
+    
+    if (style.styleSheet) {
+        style.styleSheet.cssText = css;
+    } else {
+        style.appendChild(document.createTextNode(css));
+    }
+    
+    document.head.appendChild(style);
+})();
+
+
 /* FILE: src/loader/script-loader.js */
 (function () {
   const originalConsoleError = console.error;
@@ -9458,8 +9506,10 @@ if (typeof module !== 'undefined' && module.exports) {
       // mas vamos manter simples por enquanto
       const code = scriptEl.textContent;
 
-      // Highlight visual
-      if (scriptEl.hasAttribute('view')) {
+      // Highlight visual (padrão agora é exibir, a menos que tenha atributo 'hidden')
+      const isHidden = scriptEl.hasAttribute('hidden');
+      
+      if (!isHidden) {
          if (typeof window.highlightMelScript === 'function') {
              // Remove primeira quebra de linha se existir para ficar bonito
              let displayCode = code.replace(/^\n/, ''); 
@@ -9485,9 +9535,9 @@ if (typeof module !== 'undefined' && module.exports) {
         }
       }
 
-      // Só remove se NÃO for para visualizar
-      if (!scriptEl.hasAttribute('view')) {
-        scriptEl.remove();
+      // Só remove/esconde se tiver o atributo hidden
+      if (isHidden) {
+        // scriptEl.style.display = 'none'; // Já tratado pelo CSS
       }
     }
   }

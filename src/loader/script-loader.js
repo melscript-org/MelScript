@@ -172,8 +172,10 @@
       // mas vamos manter simples por enquanto
       const code = scriptEl.textContent;
 
-      // Highlight visual
-      if (scriptEl.hasAttribute('view')) {
+      // Highlight visual (padrão agora é exibir, a menos que tenha atributo 'hidden')
+      const isHidden = scriptEl.hasAttribute('hidden');
+      
+      if (!isHidden) {
          if (typeof window.highlightMelScript === 'function') {
              // Remove primeira quebra de linha se existir para ficar bonito
              let displayCode = code.replace(/^\n/, ''); 
@@ -199,9 +201,9 @@
         }
       }
 
-      // Só remove se NÃO for para visualizar
-      if (!scriptEl.hasAttribute('view')) {
-        scriptEl.remove();
+      // Só remove/esconde se tiver o atributo hidden
+      if (isHidden) {
+        // scriptEl.style.display = 'none'; // Já tratado pelo CSS
       }
     }
   }
