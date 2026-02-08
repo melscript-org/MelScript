@@ -2,7 +2,7 @@
   "name": "melscript-support",
   "displayName": "MelScript Support",
   "description": "Official MelScript syntax highlighting for HTML files.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "ON00dev",
   "icon": "image.png",
   "license": "MIT",
@@ -24,7 +24,20 @@
     "Programming Languages"
   ],
   "contributes": {
+    "languages": [
+      {
+        "id": "melscript",
+        "aliases": ["MelScript", "mel"],
+        "extensions": [".mel"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
     "grammars": [
+      {
+        "language": "melscript",
+        "scopeName": "source.mel",
+        "path": "./syntaxes/mel.json"
+      },
       {
         "scopeName": "melscript.injection",
         "path": "./syntaxes/mel-injection.json",

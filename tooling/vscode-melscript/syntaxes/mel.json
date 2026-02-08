@@ -1,0 +1,8 @@
+{
+  "scopeName": "source.mel",
+  "patterns": [
+    {
+      "include": "source.js"
+    }
+  ]
+}
