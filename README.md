@@ -7,7 +7,7 @@
 ## 🚀 Instalação
 
 ### Opção 1: Instalador Windows (Recomendado)
-Baixe e execute o instalador oficial `MelScript_Setup_v1.0.0.exe` (disponível na pasta `dist` após o build).
+Baixe e execute o instalador oficial em [releases]("https://github.com/melscript-org/MelScript/releases").
 Este instalador configura automaticamente:
 - **CLI**: Adiciona o comando `mel` ao seu PATH.
 - **Associação de Arquivos**: Permite executar arquivos `.mel` com duplo clique.
