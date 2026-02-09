@@ -2,7 +2,7 @@
 
 **MelScript** é uma linguagem de programação interpretada, leve e versátil, projetada para rodar tanto na Web quanto no Terminal. Com sintaxe amigável e integração nativa com tecnologias web, o MelScript é ideal para automação, scripts rápidos e aprendizado de lógica de programação.
 
-![MelScript Logo](tooling/vscode-melscript/media/image.png)
+![MelScript Logo](/favicon.png)
 
 ## 🚀 Instalação
 
