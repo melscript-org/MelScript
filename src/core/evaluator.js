@@ -39,11 +39,11 @@ function evaluate(node, scope) {
     }
 
     if (node.type === 'FunctionExpression') {
-      return {
-        params: node.params,
-        body: node.body,
-        name: node.name || null,
-      };
+  return {
+    params: node.params.map(p => typeof p === 'string' ? p : p.name),
+    body: node.body,
+    name: node.name || null,
+  };
     }
 
     if (node.type === 'PostfixMemberOp') {
