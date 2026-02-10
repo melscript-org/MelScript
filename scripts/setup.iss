@@ -2,7 +2,7 @@
 ; MelScript Installer
 
 #define MyAppName "MelScript"
-#define MyAppVersion "1.0.1"
+#define MyAppVersion "1.0.2"
 #define MyAppPublisher "MelScript Org"
 #define MyAppURL "https://github.com/melscript-org/MelScript"
 #define MyAppExeName "mel.exe"
@@ -37,7 +37,7 @@ SolidCompression=yes
 WizardStyle=modern
 
 ; Ícone do instalador
-SetupIconFile=icon_files.ico
+SetupIconFile=..\icon\icon_files.ico
 UninstallDisplayIcon={app}\{#MyAppExeName}
 
 [Languages]
@@ -62,7 +62,7 @@ Source: "..\examples\runner.html"; DestDir: "{app}\examples"; Flags: ignoreversi
 Source: "..\examples\hello.mel"; DestDir: "{app}\examples"; Flags: ignoreversion
 
 ; Ícone
-Source: "icon_files.ico"; DestDir: "{app}"; DestName: "icon.ico"; Flags: ignoreversion
+Source: "..\icon\icon_files.ico"; DestDir: "{app}"; DestName: "icon.ico"; Flags: ignoreversion
 
 ; Licença
 Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
