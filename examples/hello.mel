@@ -1,5 +1,24 @@
-print("Olá do MelScript!")
-print("Este é um arquivo de exemplo.")
-for (i = 1; i <= 5; i = i + 1) {
-    print("Contagem: " + i)
+class Animal {
+    constructor(n) {
+        name = n
+    }
+    
+    speak() {
+        return name + " makes a sound"
+    }
 }
+
+class Dog extends Animal {
+    constructor(n, b) {
+        breed = b
+    }
+    
+    speak() {
+        return name + " barks!"
+    }
+}
+
+dog = Dog("Rex", "Labrador")
+print(dog.speak())    // Rex barks!
+print(dog.name)       // Rex
+print(dog.breed)      // Labrador
